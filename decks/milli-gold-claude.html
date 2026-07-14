@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>چرا Claude در کنار Cursor؟ — میلی‌گلد</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#161106;
+    --surface:rgba(240,199,94,.045);
+    --line:rgba(240,199,94,.16);
+    --line-strong:rgba(240,199,94,.42);
+    --gold:#DFB44C;
+    --gold-hi:#F3D27C;
+    --silver:#B7C1CC;
+    --silver-line:rgba(183,193,204,.28);
+    --t-hi:#F4ECD9;
+    --t-body:#CFC5AE;
+    --t-mut:#948D79;
+    --radius:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:
+      radial-gradient(1100px 600px at 85% -10%, rgba(223,180,76,.09), transparent 60%),
+      radial-gradient(900px 500px at 0% 110%, rgba(183,193,204,.05), transparent 55%),
+      var(--bg);
+    color:var(--t-body);
+    font-family:'Vazirmatn', Tahoma, 'Segoe UI', sans-serif;
+    overflow:hidden;
+  }
+
+  /* ── progress ── */
+  .progress{position:fixed;top:0;inset-inline:0;height:3px;background:rgba(223,180,76,.12);z-index:20}
+  .progress b{display:block;height:100%;width:0;
+    background:linear-gradient(90deg,var(--gold),var(--gold-hi));
+    transition:width .45s ease}
+
+  /* ── deck ── */
+  .deck{position:fixed;inset:0}
+  .slide{
+    position:absolute;inset:0;display:flex;overflow-y:auto;
+    opacity:0;visibility:hidden;transform:translateY(14px);
+    transition:opacity .5s ease,transform .5s ease,visibility 0s linear .5s;
+  }
+  .slide.active{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+  .wrap{width:min(1060px,100%);margin:auto;padding:clamp(28px,5vw,72px)}
+
+  /* ── type ── */
+  .eyebrow{
+    color:var(--gold);font-size:.86rem;font-weight:600;margin-bottom:18px;
+    display:flex;align-items:center;gap:12px;
+  }
+  .eyebrow::before{
+    content:"";width:26px;height:2px;border-radius:2px;
+    background:linear-gradient(90deg,var(--gold),transparent);
+  }
+  h1{
+    color:var(--t-hi);font-weight:900;line-height:1.35;
+    font-size:clamp(2.2rem,5.6vw,4rem);margin-bottom:22px;
+  }
+  h2{
+    color:var(--t-hi);font-weight:800;line-height:1.4;
+    font-size:clamp(1.7rem,4vw,2.7rem);margin-bottom:26px;
+  }
+  h3{color:var(--t-hi);font-weight:800;font-size:1.35rem;margin:10px 0 10px}
+  p{line-height:2;font-size:1.05rem}
+  .lede{font-size:clamp(1.05rem,2vw,1.25rem);color:var(--t-body);max-width:46ch}
+  .mut{color:var(--t-mut)}
+  .gold{color:var(--gold-hi)}
+  .silver{color:var(--silver)}
+  .ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+
+  /* ── badges ── */
+  .badge{
+    direction:ltr;unicode-bidi:isolate;display:inline-block;
+    font-size:.7rem;font-weight:700;letter-spacing:.16em;
+    padding:.34em .95em;border-radius:999px;border:1px solid;
+  }
+  .badge.c{color:var(--silver);border-color:var(--silver-line)}
+  .badge.a{color:var(--gold-hi);border-color:var(--line-strong)}
+
+  /* ── cards ── */
+  .card{
+    background:var(--surface);border:1px solid var(--line);
+    border-radius:var(--radius);padding:clamp(20px,3vw,30px);
+  }
+  .card.c{border-color:var(--silver-line);background:rgba(183,193,204,.04)}
+
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:18px;position:relative;margin-bottom:24px}
+  .duo .plus{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    background:var(--bg);border:1px solid var(--line-strong);
+    color:var(--gold-hi);font-size:1.4rem;font-weight:800;z-index:2;
+  }
+
+  .takeaway{
+    border-inline-start:3px solid var(--gold);
+    background:var(--surface);border-radius:0 var(--radius) var(--radius) 0;
+    padding:18px 22px;font-size:1.08rem;line-height:2;
+  }
+
+  /* ── lists ── */
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:22px}
+  ul.tool{list-style:none;margin-top:14px}
+  ul.tool li{
+    line-height:1.9;padding:7px 0;display:flex;gap:12px;align-items:baseline;font-size:1.02rem;
+  }
+  ul.tool li::before{
+    content:"";flex:0 0 8px;height:8px;border-radius:2px;transform:translateY(-1px);
+  }
+  .card.c ul.tool li::before{background:var(--silver)}
+  .card.a ul.tool li::before{background:var(--gold)}
+
+  /* ── stats ── */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:8px}
+  .stat .label{font-size:.85rem;color:var(--t-mut);font-weight:600;margin-bottom:10px}
+  .stat .num{
+    font-size:clamp(1.7rem,3.4vw,2.5rem);font-weight:800;color:var(--gold-hi);
+    direction:ltr;unicode-bidi:isolate;margin-bottom:12px;line-height:1.2;
+  }
+  .stat p{font-size:.95rem;line-height:1.9;color:var(--t-body)}
+  .foot{margin-top:22px;font-size:.82rem;color:var(--t-mut)}
+
+  /* ── roi ── */
+  .roi{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(20px,4vw,48px);align-items:center}
+  .roi .big{
+    font-size:clamp(3.4rem,9vw,5.6rem);font-weight:900;color:var(--gold-hi);
+    direction:ltr;unicode-bidi:isolate;line-height:1.1;
+  }
+  .roi .big small{display:block;font-size:1rem;font-weight:500;color:var(--t-mut);
+    direction:rtl;margin-top:10px;line-height:1.9}
+  ul.points{list-style:none}
+  ul.points li{padding:12px 0;line-height:2;display:flex;gap:14px;align-items:baseline;
+    border-bottom:1px solid rgba(240,199,94,.08)}
+  ul.points li:last-child{border-bottom:none}
+  ul.points li::before{content:"◆";color:var(--gold);font-size:.7rem;transform:translateY(-2px)}
+
+  /* ── steps ── */
+  .steps{display:flex;flex-direction:column;gap:16px;margin-bottom:24px}
+  .step{display:flex;gap:18px;align-items:flex-start}
+  .step .n{
+    flex:0 0 42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    border:1px solid var(--line-strong);color:var(--gold-hi);font-weight:800;font-size:1.1rem;
+  }
+  .step .txt{line-height:2;padding-top:5px}
+  .step .txt strong{color:var(--t-hi);font-weight:800}
+
+  /* ── ask ── */
+  .blocks{display:flex;flex-direction:column;gap:16px}
+  .ask{
+    border:1px solid var(--line-strong);border-radius:var(--radius);
+    background:linear-gradient(135deg,rgba(223,180,76,.13),rgba(223,180,76,.04));
+    padding:clamp(22px,3.5vw,32px);
+    font-size:clamp(1.1rem,2.2vw,1.3rem);line-height:2;color:var(--t-hi);font-weight:600;
+  }
+  .ask .tag{display:block;font-size:.82rem;font-weight:700;color:var(--gold);margin-bottom:8px}
+
+  /* ── title slide ── */
+  .meta{margin-top:36px;display:flex;gap:26px;flex-wrap:wrap;font-size:.92rem;color:var(--t-mut)}
+  .hint{margin-top:14px;font-size:.8rem;color:var(--t-mut);opacity:.75}
+
+  /* ── controls ── */
+  .controls{
+    position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:20;
+    display:flex;align-items:center;gap:14px;
+  }
+  .controls button{
+    width:42px;height:42px;border-radius:50%;cursor:pointer;
+    background:rgba(22,17,6,.7);border:1px solid var(--line);color:var(--t-body);
+    font-size:1.25rem;line-height:1;transition:border-color .2s,color .2s;
+  }
+  .controls button:hover,.controls button:focus-visible{border-color:var(--gold);color:var(--gold-hi);outline:none}
+  .counter{min-width:64px;text-align:center;font-size:.95rem;color:var(--t-mut)}
+
+  /* ── responsive ── */
+  @media (max-width:760px){
+    .duo,.cols,.stats,.roi{grid-template-columns:1fr}
+    .duo .plus{display:none}
+    .roi .big{text-align:center}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .slide,.progress b{transition:none}
+  }
+
+  /* ── print ── */
+  @media print{
+    body{overflow:visible;background:var(--bg);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .deck{position:static}
+    .slide{position:static;opacity:1;visibility:visible;transform:none;display:block;
+      break-after:page;min-height:100vh;padding:40px 0}
+    .controls,.progress,.hint{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress"><b id="bar"></b></div>
+
+<main class="deck" id="deck">
+
+  <!-- ۱ · جلد -->
+  <section class="slide active" aria-label="جلد">
+    <div class="wrap">
+      <p class="eyebrow">میلی‌گلد · تیم مهندسی بک‌اند · تیر ۱۴۰۵</p>
+      <h1>چرا <span class="gold">Claude</span> در کنار <span class="silver">Cursor</span>؟</h1>
+      <p class="lede">پیشنهاد ادامهٔ اشتراک Claude برای تیم توسعه — مختصر، مبتنی بر داده، با یک پیشنهاد اجرایی مشخص.</p>
+      <div class="meta">
+        <span>تهیه‌کننده: مهدیار · تیم‌لید بک‌اند</span>
+      </div>
+      <p class="hint">برای حرکت بین اسلایدها از کلیدهای جهت‌نما یا دکمه‌های پایین صفحه استفاده کنید.</p>
+    </div>
+  </section>
+
+  <!-- ۲ · صورت‌مسئله -->
+  <section class="slide" aria-label="صورت‌مسئله">
+    <div class="wrap">
+      <p class="eyebrow">۱ · صورت‌مسئله</p>
+      <h2>دو ابزار، دو دستهٔ متفاوت</h2>
+      <div class="duo">
+        <div class="card c">
+          <span class="badge c">CURSOR</span>
+          <h3>قلمِ بهتر</h3>
+          <p>ادیتورِ تقویت‌شده با AI. توسعه‌دهنده می‌نویسد و Cursor سرعت می‌دهد: تکمیل خودکار، ادیت درجا، دیفِ بصری پیش از هر commit.</p>
+        </div>
+        <div class="card a">
+          <span class="badge a">CLAUDE</span>
+          <h3>مهندسِ دوم</h3>
+          <p>عاملِ خودکار (Agent). کار را توصیف می‌کنید؛ خودش کدبیس را می‌خواند، برنامه می‌ریزد، چند فایل را هم‌زمان ادیت می‌کند و تست‌ها را اجرا می‌کند.</p>
+        </div>
+        <div class="plus">+</div>
+      </div>
+      <p class="takeaway">این دو با هم رقابت نمی‌کنند؛ همدیگر را کامل می‌کنند. الگوی رایج تیم‌های حرفه‌ای در ۲۰۲۶: <strong class="gold">هر دو</strong>، هرکدام در جای خودش.</p>
+    </div>
+  </section>
+
+  <!-- ۳ · تقسیم کار -->
+  <section class="slide" aria-label="تقسیم کار">
+    <div class="wrap">
+      <p class="eyebrow">۲ · تقسیم کار در میلی‌گلد</p>
+      <h2>هر کار، ابزارِ خودش</h2>
+      <div class="cols">
+        <div class="card c">
+          <span class="badge c">CURSOR</span>
+          <h3>کارِ روزمره</h3>
+          <ul class="tool">
+            <li>تکمیل خودکار حین نوشتن کد Java</li>
+            <li>اصلاح‌های کوچک و ادیت‌های خط‌به‌خط</li>
+            <li>بازبینی بصری تغییرات پیش از commit</li>
+          </ul>
+        </div>
+        <div class="card a">
+          <span class="badge a">CLAUDE</span>
+          <h3>کارِ سنگین</h3>
+          <ul class="tool">
+            <li>رفکتورِ چندفایلی بین سرویس‌ها</li>
+            <li>مهاجرت اسکیمای PostgreSQL و ارتقای وابستگی‌ها</li>
+            <li>تولید پوشش تست برای ماژول‌های قدیمی</li>
+            <li>دیباگ جریان‌های Kafka در چند سرویس</li>
+          </ul>
+        </div>
+      </div>
+      <p class="takeaway">نمونه: «همهٔ فراخوانی‌های سرویس پرداخت را به کلاینت جدید منتقل کن و تست‌ها را به‌روز کن» — در Claude <strong class="gold">یک دستور</strong> است؛ به‌صورت دستی، نصف روز کار.</p>
+    </div>
+  </section>
+
+  <!-- ۴ · پرسش کلیدی -->
+  <section class="slide" aria-label="پاسخ به پرسش کلیدی">
+    <div class="wrap">
+      <p class="eyebrow">۳ · پاسخ به پرسش کلیدی</p>
+      <h2>«مگر Cursor خودش مدل Claude را ندارد؟»</h2>
+      <p class="lede" style="margin-bottom:26px">دارد — اما دسترسی از داخل Cursor سه محدودیت جدی دارد:</p>
+      <div class="stats">
+        <div class="card stat">
+          <p class="label">پنجرهٔ کانتکست</p>
+          <p class="num">1M <span style="font-size:.55em;color:var(--t-mut)">vs</span> ~120K</p>
+          <p>Claude Code کل ریپو یا یک مهاجرت چندسرویسی را یک‌جا نگه می‌دارد؛ کانتکستِ قابل‌استفادهٔ Cursor در عمل بسیار کوچک‌تر از عدد اعلام‌شده است.</p>
+        </div>
+        <div class="card stat">
+          <p class="label">بهره‌وری توکن</p>
+          <p class="num">5.5×</p>
+          <p>در آزمون مستقل، کار یکسان در Claude Code با ۳۳ هزار توکن انجام شد و در Cursor با ۱۸۸ هزار.</p>
+        </div>
+        <div class="card stat">
+          <p class="label">مدل هزینه</p>
+          <p class="num" style="font-size:clamp(1.3rem,2.4vw,1.8rem)">ثابت vs کردیتی</p>
+          <p>اشتراک Claude نرخ ثابت و قابل بودجه‌بندی دارد؛ سیستم کردیتی Cursor برای مدل‌های سنگین، هزینهٔ مازادِ غیرقابل پیش‌بینی می‌سازد.</p>
+        </div>
+      </div>
+      <p class="foot">منبع: بنچمارک‌ها و آزمون‌های مستقل منتشرشده، نیمهٔ اول ۲۰۲۶</p>
+    </div>
+  </section>
+
+  <!-- ۵ · هزینه و بازده -->
+  <section class="slide" aria-label="هزینه و بازده">
+    <div class="wrap">
+      <p class="eyebrow">۴ · هزینه و بازده</p>
+      <h2>کمتر از یک ساعتِ مهندس در ماه</h2>
+      <div class="roi">
+        <div>
+          <p class="big">+$20
+            <small>هزینهٔ افزودهٔ Claude برای هر توسعه‌دهنده در ماه، نسبت به وضع موجود</small>
+          </p>
+        </div>
+        <ul class="points">
+          <li>یک رفکتور بزرگ که نصف‌روز صرفه‌جویی کند، هزینهٔ کل ماه را برمی‌گرداند.</li>
+          <li>بهره‌وری توکنِ بالاتر یعنی در کارهای پیچیده، هزینهٔ هر «کارِ انجام‌شده» عملاً پایین‌تر است.</li>
+          <li>ابزاری جایگزین نمی‌شود؛ فقط لایهٔ «کارهای سنگین» به جعبه‌ابزار اضافه می‌شود.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ۶ · پیشنهاد اجرایی -->
+  <section class="slide" aria-label="پیشنهاد اجرایی">
+    <div class="wrap">
+      <p class="eyebrow">۵ · پیشنهاد اجرایی</p>
+      <h2>رول‌اوتِ هدفمند، نه اشتراک همگانی</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="n">۱</div>
+          <p class="txt"><strong>Cursor برای همه</strong> — وضع موجود بدون تغییر می‌ماند.</p>
+        </div>
+        <div class="step">
+          <div class="n">۲</div>
+          <p class="txt"><strong>Claude فقط برای تیم‌لیدها و سنیورها</strong> — جایی که رفکتور سنگین، کار معماری و دیباگ چندسرویسی انجام می‌شود.</p>
+        </div>
+        <div class="step">
+          <div class="n">۳</div>
+          <p class="txt"><strong>بازبینی پس از سه ماه</strong> — با معیار روشن: تعداد کارهای چندفایلیِ تحویل‌شده با ایجنت و زمان صرفه‌جویی‌شده.</p>
+        </div>
+      </div>
+      <p class="takeaway">تعهد بلندمدت ندارد؛ اشتراک ماهانه است و هر زمان قابل لغو.</p>
+    </div>
+  </section>
+
+  <!-- ۷ · شفافیت و تصمیم -->
+  <section class="slide" aria-label="شفافیت و تصمیم">
+    <div class="wrap">
+      <p class="eyebrow">۶ · شفافیت و تصمیم</p>
+      <h2>محدودیتی که خودمان اعلام می‌کنیم</h2>
+      <div class="blocks">
+        <div class="card c">
+          <p><strong class="silver">محدودیت:</strong> Claude Code فقط مدل‌های Anthropic را اجرا می‌کند — تنوع مدل ندارد.</p>
+        </div>
+        <div class="card">
+          <p><strong class="gold">پوشش ما:</strong> Cursor چندمدله باقی می‌ماند (GPT، Gemini، Claude). اگر کیفیت یک ارائه‌دهنده افت کند، جریان کار تیم متوقف نمی‌شود.</p>
+        </div>
+        <div class="ask">
+          <span class="tag">درخواست</span>
+          تأیید اشتراک Claude برای تیم‌لیدها و سنیورهای بک‌اند، با بازبینی عملکرد پس از سه ماه.
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<nav class="controls" aria-label="ناوبری اسلایدها">
+  <button id="prev" aria-label="اسلاید قبلی">›</button>
+  <span class="counter" id="counter" aria-live="polite"></span>
+  <button id="next" aria-label="اسلاید بعدی">‹</button>
+</nav>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const bar = document.getElementById('bar');
+  const counter = document.getElementById('counter');
+  const fa = n => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+  let i = 0;
+
+  function go(n){
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    bar.style.width = ((i + 1) / slides.length * 100) + '%';
+    counter.textContent = fa(i + 1) + ' / ' + fa(slides.length);
+  }
+
+  document.getElementById('next').addEventListener('click', () => go(i + 1));
+  document.getElementById('prev').addEventListener('click', () => go(i - 1));
+
+  window.addEventListener('keydown', e => {
+    if (['ArrowLeft','ArrowDown','PageDown',' ','Enter'].includes(e.key)) { e.preventDefault(); go(i + 1); }
+    else if (['ArrowRight','ArrowUp','PageUp'].includes(e.key)) { e.preventDefault(); go(i - 1); }
+    else if (e.key === 'Home') go(0);
+    else if (e.key === 'End') go(slides.length - 1);
+  });
+
+  let x0 = null;
+  window.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, {passive:true});
+  window.addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 60) (dx < 0 ? go(i + 1) : go(i - 1));
+    x0 = null;
+  }, {passive:true});
+
+  go(0);
+</script>
+</body>
+</html>

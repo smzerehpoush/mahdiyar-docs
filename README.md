@@ -2,12 +2,23 @@
 
 مستندات و اسلایدهای کاری.
 
+## ساختار
+
+- [`index.html`](./index.html) — صفحهٔ فهرست که به همهٔ اسلایدها لینک می‌دهد.
+- پوشهٔ [`decks/`](./decks) — هر سند/اسلاید به‌صورت یک فایل HTML مستقل:
+  - [`decks/milli-gold-claude.html`](./decks/milli-gold-claude.html) — «چرا Claude در کنار Cursor؟»
+  - [`decks/head-of-product-engineering.html`](./decks/head-of-product-engineering.html) — «چرا میلی به Head of Product Engineering نیاز دارد»
+
 ## انتشار
 
 این سایت به‌صورت خودکار از طریق GitHub Pages منتشر می‌شود.
 
-- فایل اصلی: [`index.html`](./index.html)
-- آدرس آنلاین (پس از فعال شدن Pages): `https://smzerehpoush.github.io/mahdiyar-docs/`
+- آدرس آنلاین: `https://smzerehpoush.github.io/mahdiyar-docs/`
+
+## افزودن سند جدید
+
+۱. فایل HTML را در پوشهٔ `decks/` قرار دهید.
+۲. یک کارت جدید در `index.html` اضافه کنید که به آن لینک بدهد.
 
 ## توسعه محلی
 
