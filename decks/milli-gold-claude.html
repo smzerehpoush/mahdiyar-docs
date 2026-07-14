@@ -9,25 +9,25 @@
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#161106;
-    --surface:rgba(240,199,94,.045);
-    --line:rgba(240,199,94,.16);
-    --line-strong:rgba(240,199,94,.42);
-    --gold:#DFB44C;
-    --gold-hi:#F3D27C;
-    --silver:#B7C1CC;
-    --silver-line:rgba(183,193,204,.28);
-    --t-hi:#F4ECD9;
-    --t-body:#CFC5AE;
-    --t-mut:#948D79;
+    --bg:#16205C;
+    --surface:rgba(242,168,30,.05);
+    --line:rgba(242,168,30,.18);
+    --line-strong:rgba(242,168,30,.45);
+    --gold:#F2A81E;
+    --gold-hi:#FFC24D;
+    --silver:#AEB8D8;
+    --silver-line:rgba(174,184,216,.30);
+    --t-hi:#FFFFFF;
+    --t-body:#D2D7EF;
+    --t-mut:#8E96C4;
     --radius:16px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
   body{
     background:
-      radial-gradient(1100px 600px at 85% -10%, rgba(223,180,76,.09), transparent 60%),
-      radial-gradient(900px 500px at 0% 110%, rgba(183,193,204,.05), transparent 55%),
+      radial-gradient(1100px 600px at 85% -10%, rgba(242,168,30,.10), transparent 60%),
+      radial-gradient(900px 500px at 0% 110%, rgba(90,110,215,.18), transparent 55%),
       var(--bg);
     color:var(--t-body);
     font-family:'Vazirmatn', Tahoma, 'Segoe UI', sans-serif;
@@ -35,7 +35,7 @@
   }
 
   /* ── progress ── */
-  .progress{position:fixed;top:0;inset-inline:0;height:3px;background:rgba(223,180,76,.12);z-index:20}
+  .progress{position:fixed;top:0;inset-inline:0;height:3px;background:rgba(242,168,30,.14);z-index:20}
   .progress b{display:block;height:100%;width:0;
     background:linear-gradient(90deg,var(--gold),var(--gold-hi));
     transition:width .45s ease}
@@ -89,7 +89,7 @@
     background:var(--surface);border:1px solid var(--line);
     border-radius:var(--radius);padding:clamp(20px,3vw,30px);
   }
-  .card.c{border-color:var(--silver-line);background:rgba(183,193,204,.04)}
+  .card.c{border-color:var(--silver-line);background:rgba(174,184,216,.06)}
 
   .duo{display:grid;grid-template-columns:1fr 1fr;gap:18px;position:relative;margin-bottom:24px}
   .duo .plus{
@@ -137,7 +137,7 @@
     direction:rtl;margin-top:10px;line-height:1.9}
   ul.points{list-style:none}
   ul.points li{padding:12px 0;line-height:2;display:flex;gap:14px;align-items:baseline;
-    border-bottom:1px solid rgba(240,199,94,.08)}
+    border-bottom:1px solid rgba(242,168,30,.12)}
   ul.points li:last-child{border-bottom:none}
   ul.points li::before{content:"◆";color:var(--gold);font-size:.7rem;transform:translateY(-2px)}
 
@@ -155,7 +155,7 @@
   .blocks{display:flex;flex-direction:column;gap:16px}
   .ask{
     border:1px solid var(--line-strong);border-radius:var(--radius);
-    background:linear-gradient(135deg,rgba(223,180,76,.13),rgba(223,180,76,.04));
+    background:linear-gradient(135deg,rgba(242,168,30,.15),rgba(242,168,30,.04));
     padding:clamp(22px,3.5vw,32px);
     font-size:clamp(1.1rem,2.2vw,1.3rem);line-height:2;color:var(--t-hi);font-weight:600;
   }
@@ -172,7 +172,7 @@
   }
   .controls button{
     width:42px;height:42px;border-radius:50%;cursor:pointer;
-    background:rgba(22,17,6,.7);border:1px solid var(--line);color:var(--t-body);
+    background:rgba(18,24,74,.72);border:1px solid var(--line);color:var(--t-body);
     font-size:1.25rem;line-height:1;transition:border-color .2s,color .2s;
   }
   .controls button:hover,.controls button:focus-visible{border-color:var(--gold);color:var(--gold-hi);outline:none}
