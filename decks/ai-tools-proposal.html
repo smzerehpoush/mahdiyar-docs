@@ -9,12 +9,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#16205C;
-    --surface:rgba(242,168,30,.05);
-    --line:rgba(242,168,30,.18);
-    --line-strong:rgba(242,168,30,.45);
-    --gold:#F2A81E;
-    --gold-hi:#FFC24D;
+    --bg:#051061;
+    --surface:rgba(253,185,19,.05);
+    --line:rgba(253,185,19,.18);
+    --line-strong:rgba(253,185,19,.45);
+    --gold:#FDB913;
+    --gold-hi:#FFD04D;
     --silver:#AEB8D8;
     --silver-line:rgba(174,184,216,.30);
     --t-hi:#FFFFFF;
@@ -26,8 +26,8 @@
   html,body{height:100%}
   body{
     background:
-      radial-gradient(1100px 600px at 85% -10%, rgba(242,168,30,.10), transparent 60%),
-      radial-gradient(900px 500px at 0% 110%, rgba(90,110,215,.18), transparent 55%),
+      radial-gradient(1100px 600px at 85% -10%, rgba(253,185,19,.10), transparent 60%),
+      radial-gradient(900px 500px at 0% 110%, rgba(1,109,242,.18), transparent 55%),
       var(--bg);
     color:var(--t-body);
     font-family:'Vazirmatn', Tahoma, 'Segoe UI', sans-serif;
@@ -35,7 +35,7 @@
   }
 
   /* ── progress ── */
-  .progress{position:fixed;top:0;inset-inline:0;height:3px;background:rgba(242,168,30,.14);z-index:20}
+  .progress{position:fixed;top:0;inset-inline:0;height:3px;background:rgba(253,185,19,.14);z-index:20}
   .progress b{display:block;height:100%;width:0;
     background:linear-gradient(90deg,var(--gold),var(--gold-hi));
     transition:width .45s ease}
@@ -126,9 +126,9 @@
     overflow:hidden}
   .tbl th,.tbl td{padding:16px 20px;text-align:right;line-height:1.9;font-size:1.02rem;
     border-bottom:1px solid var(--line)}
-  .tbl th{color:var(--gold);font-size:.85rem;font-weight:700;background:rgba(242,168,30,.07)}
+  .tbl th{color:var(--gold);font-size:.85rem;font-weight:700;background:rgba(253,185,19,.07)}
   .tbl tr:last-child td{border-bottom:none}
-  .tbl td.total{color:var(--t-hi);font-weight:800;background:rgba(242,168,30,.07)}
+  .tbl td.total{color:var(--t-hi);font-weight:800;background:rgba(253,185,19,.07)}
 
   /* ── roi ── */
   .roi{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(20px,4vw,48px);align-items:center}
@@ -140,7 +140,7 @@
     direction:rtl;margin-top:10px;line-height:1.9}
   ul.points{list-style:none}
   ul.points li{padding:12px 0;line-height:2;display:flex;gap:14px;align-items:baseline;
-    border-bottom:1px solid rgba(242,168,30,.12)}
+    border-bottom:1px solid rgba(253,185,19,.12)}
   ul.points li:last-child{border-bottom:none}
   ul.points li::before{content:"◆";color:var(--gold);font-size:.7rem;transform:translateY(-2px)}
 
@@ -158,7 +158,7 @@
   .blocks{display:flex;flex-direction:column;gap:16px}
   .ask{
     border:1px solid var(--line-strong);border-radius:var(--radius);
-    background:linear-gradient(135deg,rgba(242,168,30,.15),rgba(242,168,30,.04));
+    background:linear-gradient(135deg,rgba(253,185,19,.15),rgba(253,185,19,.04));
     padding:clamp(22px,3.5vw,32px);
     font-size:clamp(1.1rem,2.2vw,1.3rem);line-height:2;color:var(--t-hi);font-weight:600;
   }
