@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سرمایه‌گذاری در ابزارهای هوش مصنوعی توسعه — میلی</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#16205C;
+    --surface:rgba(242,168,30,.05);
+    --line:rgba(242,168,30,.18);
+    --line-strong:rgba(242,168,30,.45);
+    --gold:#F2A81E;
+    --gold-hi:#FFC24D;
+    --silver:#AEB8D8;
+    --silver-line:rgba(174,184,216,.30);
+    --t-hi:#FFFFFF;
+    --t-body:#D2D7EF;
+    --t-mut:#8E96C4;
+    --radius:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:
+      radial-gradient(1100px 600px at 85% -10%, rgba(242,168,30,.10), transparent 60%),
+      radial-gradient(900px 500px at 0% 110%, rgba(90,110,215,.18), transparent 55%),
+      var(--bg);
+    color:var(--t-body);
+    font-family:'Vazirmatn', Tahoma, 'Segoe UI', sans-serif;
+    overflow:hidden;
+  }
+
+  /* ── progress ── */
+  .progress{position:fixed;top:0;inset-inline:0;height:3px;background:rgba(242,168,30,.14);z-index:20}
+  .progress b{display:block;height:100%;width:0;
+    background:linear-gradient(90deg,var(--gold),var(--gold-hi));
+    transition:width .45s ease}
+
+  /* ── deck ── */
+  .deck{position:fixed;inset:0}
+  .slide{
+    position:absolute;inset:0;display:flex;overflow-y:auto;
+    opacity:0;visibility:hidden;transform:translateY(14px);
+    transition:opacity .5s ease,transform .5s ease,visibility 0s linear .5s;
+  }
+  .slide.active{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+  .wrap{width:min(1060px,100%);margin:auto;padding:clamp(28px,5vw,72px)}
+
+  /* ── type ── */
+  .eyebrow{
+    color:var(--gold);font-size:.86rem;font-weight:600;margin-bottom:18px;
+    display:flex;align-items:center;gap:12px;
+  }
+  .eyebrow::before{
+    content:"";width:26px;height:2px;border-radius:2px;
+    background:linear-gradient(90deg,var(--gold),transparent);
+  }
+  h1{
+    color:var(--t-hi);font-weight:900;line-height:1.35;
+    font-size:clamp(2.2rem,5.6vw,4rem);margin-bottom:22px;
+  }
+  h2{
+    color:var(--t-hi);font-weight:800;line-height:1.4;
+    font-size:clamp(1.7rem,4vw,2.7rem);margin-bottom:26px;
+  }
+  h3{color:var(--t-hi);font-weight:800;font-size:1.35rem;margin:10px 0 10px}
+  p{line-height:2;font-size:1.05rem}
+  .lede{font-size:clamp(1.05rem,2vw,1.25rem);color:var(--t-body);max-width:52ch}
+  .mut{color:var(--t-mut)}
+  .gold{color:var(--gold-hi)}
+  .silver{color:var(--silver)}
+  .ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+
+  /* ── badges ── */
+  .badge{
+    direction:ltr;unicode-bidi:isolate;display:inline-block;
+    font-size:.7rem;font-weight:700;letter-spacing:.16em;
+    padding:.34em .95em;border-radius:999px;border:1px solid;
+  }
+  .badge.c{color:var(--silver);border-color:var(--silver-line)}
+  .badge.a{color:var(--gold-hi);border-color:var(--line-strong)}
+
+  /* ── cards ── */
+  .card{
+    background:var(--surface);border:1px solid var(--line);
+    border-radius:var(--radius);padding:clamp(20px,3vw,30px);
+  }
+  .card.c{border-color:var(--silver-line);background:rgba(174,184,216,.06)}
+
+  .takeaway{
+    border-inline-start:3px solid var(--gold);
+    background:var(--surface);border-radius:0 var(--radius) var(--radius) 0;
+    padding:18px 22px;font-size:1.08rem;line-height:2;
+  }
+
+  /* ── lists ── */
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:22px}
+  .cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:22px}
+  ul.tool{list-style:none;margin-top:14px}
+  ul.tool li{
+    line-height:1.9;padding:7px 0;display:flex;gap:12px;align-items:baseline;font-size:1.02rem;
+  }
+  ul.tool li::before{
+    content:"";flex:0 0 8px;height:8px;border-radius:2px;transform:translateY(-1px);
+    background:var(--gold);
+  }
+  .card.c ul.tool li::before{background:var(--silver)}
+
+  /* ── stats ── */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:8px}
+  .stat .label{font-size:.85rem;color:var(--t-mut);font-weight:600;margin-bottom:10px}
+  .stat .num{
+    font-size:clamp(1.7rem,3.4vw,2.5rem);font-weight:800;color:var(--gold-hi);
+    direction:ltr;unicode-bidi:isolate;margin-bottom:12px;line-height:1.2;
+  }
+  .stat p{font-size:.95rem;line-height:1.9;color:var(--t-body)}
+  .foot{margin-top:22px;font-size:.82rem;color:var(--t-mut)}
+
+  /* ── table ── */
+  table.tbl{width:100%;border-collapse:collapse;margin-bottom:24px;
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    overflow:hidden}
+  .tbl th,.tbl td{padding:16px 20px;text-align:right;line-height:1.9;font-size:1.02rem;
+    border-bottom:1px solid var(--line)}
+  .tbl th{color:var(--gold);font-size:.85rem;font-weight:700;background:rgba(242,168,30,.07)}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl td.total{color:var(--t-hi);font-weight:800;background:rgba(242,168,30,.07)}
+
+  /* ── roi ── */
+  .roi{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(20px,4vw,48px);align-items:center}
+  .roi .big{
+    font-size:clamp(3.4rem,9vw,5.6rem);font-weight:900;color:var(--gold-hi);
+    direction:ltr;unicode-bidi:isolate;line-height:1.1;
+  }
+  .roi .big small{display:block;font-size:1rem;font-weight:500;color:var(--t-mut);
+    direction:rtl;margin-top:10px;line-height:1.9}
+  ul.points{list-style:none}
+  ul.points li{padding:12px 0;line-height:2;display:flex;gap:14px;align-items:baseline;
+    border-bottom:1px solid rgba(242,168,30,.12)}
+  ul.points li:last-child{border-bottom:none}
+  ul.points li::before{content:"◆";color:var(--gold);font-size:.7rem;transform:translateY(-2px)}
+
+  /* ── steps ── */
+  .steps{display:flex;flex-direction:column;gap:16px;margin-bottom:24px}
+  .step{display:flex;gap:18px;align-items:flex-start}
+  .step .n{
+    flex:0 0 42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    border:1px solid var(--line-strong);color:var(--gold-hi);font-weight:800;font-size:1.1rem;
+  }
+  .step .txt{line-height:2;padding-top:5px}
+  .step .txt strong{color:var(--t-hi);font-weight:800}
+
+  /* ── ask ── */
+  .blocks{display:flex;flex-direction:column;gap:16px}
+  .ask{
+    border:1px solid var(--line-strong);border-radius:var(--radius);
+    background:linear-gradient(135deg,rgba(242,168,30,.15),rgba(242,168,30,.04));
+    padding:clamp(22px,3.5vw,32px);
+    font-size:clamp(1.1rem,2.2vw,1.3rem);line-height:2;color:var(--t-hi);font-weight:600;
+  }
+  .ask .tag{display:block;font-size:.82rem;font-weight:700;color:var(--gold);margin-bottom:8px}
+
+  /* ── title slide ── */
+  .meta{margin-top:36px;display:flex;gap:26px;flex-wrap:wrap;font-size:.92rem;color:var(--t-mut)}
+  .hint{margin-top:14px;font-size:.8rem;color:var(--t-mut);opacity:.75}
+
+  /* ── controls ── */
+  .controls{
+    position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:20;
+    display:flex;align-items:center;gap:14px;
+  }
+  .controls button{
+    width:42px;height:42px;border-radius:50%;cursor:pointer;
+    background:rgba(18,24,74,.72);border:1px solid var(--line);color:var(--t-body);
+    font-size:1.25rem;line-height:1;transition:border-color .2s,color .2s;
+  }
+  .controls button:hover,.controls button:focus-visible{border-color:var(--gold);color:var(--gold-hi);outline:none}
+  .counter{min-width:64px;text-align:center;font-size:.95rem;color:var(--t-mut)}
+
+  /* ── responsive ── */
+  @media (max-width:760px){
+    .cols,.cols3,.stats,.roi{grid-template-columns:1fr}
+    .roi .big{text-align:center}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .slide,.progress b{transition:none}
+  }
+
+  /* ── print ── */
+  @media print{
+    body{overflow:visible;background:var(--bg);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .deck{position:static}
+    .slide{position:static;opacity:1;visibility:visible;transform:none;display:block;
+      break-after:page;min-height:100vh;padding:40px 0}
+    .controls,.progress,.hint{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress"><b id="bar"></b></div>
+
+<main class="deck" id="deck">
+
+  <!-- جلد -->
+  <section class="slide active" aria-label="جلد">
+    <div class="wrap">
+      <p class="eyebrow">میلی · واحد فناوری · تیر ۱۴۰۵</p>
+      <h1>سرمایه‌گذاری در ابزارهای <span class="gold">هوش مصنوعی</span> توسعهٔ نرم‌افزار</h1>
+      <p class="lede">پیشنهاد تأمین رسمی <span class="ltr">Cursor</span> و <span class="ltr">Claude Code</span> برای کل تیم فنی — با توجیه اقتصادی روشن، مدیریت ریسک و برنامهٔ اجرای مرحله‌ای.</p>
+      <div class="meta">
+        <span>تهیه‌کننده: واحد فناوری (CTO)</span>
+        <span>مخاطب: مدیریت ارشد سازمان</span>
+      </div>
+      <p class="hint">برای حرکت بین اسلایدها از کلیدهای جهت‌نما یا دکمه‌های پایین صفحه استفاده کنید.</p>
+    </div>
+  </section>
+
+  <!-- ۱ · خلاصه مدیریتی -->
+  <section class="slide" aria-label="خلاصه مدیریتی">
+    <div class="wrap">
+      <p class="eyebrow">۱ · خلاصهٔ مدیریتی</p>
+      <h2>یک تصمیم، سه عدد</h2>
+      <p class="lede" style="margin-bottom:26px">پیشنهاد می‌شود شرکت استفاده از ابزارهای هوش مصنوعی توسعهٔ نرم‌افزار را به‌صورت رسمی برای کلیهٔ اعضای تیم فنی فراهم کند.</p>
+      <div class="stats">
+        <div class="card stat">
+          <p class="label">اندازهٔ تیم فنی</p>
+          <p class="num">70</p>
+          <p>نفر در تیم‌های توسعه، امنیت، دیتا و IT — دامنهٔ پوشش این طرح.</p>
+        </div>
+        <div class="card stat">
+          <p class="label">بودجهٔ سالانهٔ درخواستی</p>
+          <p class="num">$40K</p>
+          <p>در مقایسه با هزینهٔ سالانهٔ نیروی انسانی تیم، کمتر از یک درصد.</p>
+        </div>
+        <div class="card stat">
+          <p class="label">بازگشت سرمایهٔ سال اول</p>
+          <p class="num">≈4×</p>
+          <p>با فرض محافظه‌کارانهٔ ۲۰٪ بهبود بهره‌وری؛ جزئیات محاسبه در بخش ROI.</p>
+        </div>
+      </div>
+      <p class="takeaway" style="margin-top:22px">هدف صرفاً خرید ابزار نیست؛ <strong class="gold">بهره‌وری، کیفیت، رضایت متخصصان و مزیت رقابتی</strong> موضوع این سرمایه‌گذاری است.</p>
+    </div>
+  </section>
+
+  <!-- ۲ · چرا حالا -->
+  <section class="slide" aria-label="وضعیت فعلی">
+    <div class="wrap">
+      <p class="eyebrow">۲ · وضعیت فعلی</p>
+      <h2>این ابزارها دیگر «مزیت» نیستند؛ استانداردند</h2>
+      <p class="lede" style="margin-bottom:26px">ابزارهای مبتنی بر مدل‌های زبانی بزرگ (LLM) در شرکت‌های فناوری دنیا به بخشی جدایی‌ناپذیر از فرآیند توسعه تبدیل شده‌اند:</p>
+      <div class="cols">
+        <div class="card a">
+          <span class="badge a">در چرخهٔ کد</span>
+          <ul class="tool">
+            <li>تولید و تکمیل خودکار کد</li>
+            <li>Refactoring و تولید Unit Test</li>
+            <li>بررسی Pull Request</li>
+            <li>تحلیل خطا و Debugging</li>
+          </ul>
+        </div>
+        <div class="card c">
+          <span class="badge c">فراتر از کد</span>
+          <ul class="tool">
+            <li>مستندسازی و انتقال دانش</li>
+            <li>تحلیل لاگ</li>
+            <li>یادگیری سریع تکنولوژی‌های جدید</li>
+            <li>کمک به طراحی معماری</li>
+          </ul>
+        </div>
+      </div>
+      <p class="takeaway">عدم استفاده از این ابزارها یعنی <strong class="gold">کاهش تدریجی رقابت‌پذیری تیم فنی</strong> در برابر شرکت‌هایی که هم‌اکنون از آن‌ها استفاده می‌کنند.</p>
+    </div>
+  </section>
+
+  <!-- ۳ · اهداف طرح -->
+  <section class="slide" aria-label="اهداف طرح">
+    <div class="wrap">
+      <p class="eyebrow">۳ · اهداف طرح</p>
+      <h2>سه محور، نه فهرست بلند</h2>
+      <div class="cols3">
+        <div class="card">
+          <h3 class="gold">سرعت و کیفیت</h3>
+          <ul class="tool">
+            <li>افزایش سرعت تولید نرم‌افزار</li>
+            <li>ارتقای کیفیت کد</li>
+            <li>کاهش زمان رفع خطا</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 class="gold">افراد</h3>
+          <ul class="tool">
+            <li>تمرکز توسعه‌دهندگان بر مسائل پیچیده</li>
+            <li>افزایش رضایت شغلی</li>
+            <li>جذب و حفظ نیروهای متخصص</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 class="gold">سازمان</h3>
+          <ul class="tool">
+            <li>هم‌راستایی با روندهای جهانی صنعت</li>
+            <li>مزیت رقابتی در محصولات جدید</li>
+            <li>کاهش وابستگی به افراد کلیدی</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ۴ · مزایای کسب‌وکاری -->
+  <section class="slide" aria-label="مزایای کسب‌وکاری">
+    <div class="wrap">
+      <p class="eyebrow">۴ · مزایای کسب‌وکاری</p>
+      <h2>اثر مستقیم بر سه شاخص کلیدی</h2>
+      <div class="stats">
+        <div class="card stat">
+          <p class="label">بهره‌وری توسعه‌دهندگان</p>
+          <p class="num">20–50%</p>
+          <p>بر اساس مطالعات منتشرشدهٔ شرکت‌های بزرگ فناوری، بسته به نوع پروژه. بیشترین صرفه‌جویی در کدهای تکراری، تست، مستندسازی، دیباگ و رفکتور.</p>
+        </div>
+        <div class="card stat">
+          <p class="label">زمان عرضهٔ محصول</p>
+          <p class="num" style="font-size:clamp(1.3rem,2.4vw,1.8rem)">Time to Market</p>
+          <p>هر هفته کاهش در زمان توسعه، یعنی ارائهٔ سریع‌تر قابلیت‌های جدید به مشتریان — مزیتی تعیین‌کننده در بازار رقابتی.</p>
+        </div>
+        <div class="card stat">
+          <p class="label">کیفیت نرم‌افزار</p>
+          <p class="num" style="font-size:clamp(1.3rem,2.4vw,1.8rem)">خطای کمتر</p>
+          <p>تشخیص خطاهای رایج، رعایت استانداردهای کدنویسی و کمک در تولید تست، احتمال خطای انسانی را کاهش می‌دهد.</p>
+        </div>
+      </div>
+      <p class="takeaway" style="margin-top:22px">و یک اثر جانبی راهبردی: <strong class="gold">برند کارفرمایی</strong>. توسعه‌دهندگان حرفه‌ای امروز انتظار دارند این ابزارها در اختیارشان باشد؛ نبودشان مستقیماً بر جذب و حفظ نیرو اثر منفی می‌گذارد.</p>
+    </div>
+  </section>
+
+  <!-- ۵ · برآورد هزینه -->
+  <section class="slide" aria-label="برآورد هزینه">
+    <div class="wrap">
+      <p class="eyebrow">۵ · برآورد هزینه</p>
+      <h2>مدل ترکیبی: پوشش کامل، هزینهٔ کنترل‌شده</h2>
+      <table class="tbl">
+        <thead>
+          <tr><th>ابزار</th><th>تعداد کاربر</th><th>هزینهٔ سالانه</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong class="silver">Cursor Pro</strong> — برای همهٔ توسعه‌دهندگان</td>
+            <td><span class="ltr">60</span></td>
+            <td><span class="ltr">$14,400</span></td>
+          </tr>
+          <tr>
+            <td><strong class="gold">Claude Code</strong> — برای کاربران کلیدی (کارهای سنگین و چندفایلی)</td>
+            <td><span class="ltr">20</span></td>
+            <td><span class="ltr">$24,000 – $48,000</span></td>
+          </tr>
+          <tr>
+            <td class="total">سقف بودجهٔ پیشنهادی</td>
+            <td class="total"></td>
+            <td class="total"><span class="ltr">$40,000</span> در سال</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="takeaway">این مدل ترکیبی همهٔ توسعه‌دهندگان را پوشش می‌دهد و در عین حال نسبت به تخصیص Claude Code به همهٔ اعضا، هزینه را <strong class="gold">به‌شکل قابل توجهی کاهش</strong> می‌دهد. ترکیب لایسنس‌ها بر اساس دادهٔ مصرف واقعی، فصلی بازنگری می‌شود.</p>
+    </div>
+  </section>
+
+  <!-- ۶ · بازگشت سرمایه -->
+  <section class="slide" aria-label="بازگشت سرمایه">
+    <div class="wrap">
+      <p class="eyebrow">۶ · بازگشت سرمایه (ROI)</p>
+      <h2>محاسبه‌ای که روی یک اسلاید جا می‌شود</h2>
+      <div class="roi">
+        <div>
+          <p class="big">≈4×
+            <small>نسبت صرفه‌جویی سالانه به بودجهٔ درخواستی — با محافظه‌کارانه‌ترین فرض</small>
+          </p>
+        </div>
+        <ul class="points">
+          <li>هزینهٔ حقوق سالانهٔ تیم فنی (≈۷۰ نفر با میانگین ۱۸۰ میلیون تومان در ماه) حدود <strong class="gold">۱۵۰ میلیارد تومان</strong> است.</li>
+          <li>بهبود ۲۰٪ بهره‌وری — کفِ بازهٔ مطالعات — یعنی حدود ۳۰ میلیارد تومان، معادل <strong class="gold">≈۱۶۰ هزار دلار</strong> در سال.</li>
+          <li>در برابر بودجهٔ ۴۰ هزار دلاری: بازگشت کامل سرمایه در حدود <strong class="gold">۳ ماه</strong>؛ حتی با یک‌چهارمِ این بهبود، در کمتر از یک سال.</li>
+          <li>مزایای غیرمستقیم — کاهش خطا، حفظ نیرو، عرضهٔ سریع‌تر — روی این عدد سوار می‌شوند و در آن لحاظ نشده‌اند.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ۷ · ریسک‌ها -->
+  <section class="slide" aria-label="ریسک‌ها و راهکارهای کنترل">
+    <div class="wrap">
+      <p class="eyebrow">۷ · ریسک‌ها و راهکارهای کنترل</p>
+      <h2>هر ریسک، یک مالک و یک راهکار</h2>
+      <div class="cols">
+        <div class="card c">
+          <h3 class="silver">ارسال اطلاعات محرمانه</h3>
+          <p>تدوین دستورالعمل استفاده و ممنوعیت ارسال داده‌های حساس؛ استفاده از تنظیمات Enterprise یا محدودسازی داده‌ها در صورت نیاز.</p>
+        </div>
+        <div class="card c">
+          <h3 class="silver">تولید کد نادرست</h3>
+          <p>الزام به Code Review و تست‌های خودکار برای همهٔ کدها — دقیقاً همان‌طور که برای کد انسانی الزامی است.</p>
+        </div>
+        <div class="card c">
+          <h3 class="silver">وابستگی بیش از حد به AI</h3>
+          <p>مسئولیت نهایی هر تغییر با توسعه‌دهنده باقی می‌ماند؛ آموزش الگوهای استفادهٔ صحیح بخشی از رول‌اوت است.</p>
+        </div>
+        <div class="card c">
+          <h3 class="silver">هزینهٔ اشتراک</h3>
+          <p>پایش دوره‌ای میزان استفاده و بازنگری فصلی تعداد لایسنس‌ها؛ اشتراک‌ها ماهانه‌اند و تعهد بلندمدت ندارند.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ۸ · شاخص‌های موفقیت -->
+  <section class="slide" aria-label="شاخص‌های موفقیت">
+    <div class="wrap">
+      <p class="eyebrow">۸ · شاخص‌های موفقیت</p>
+      <h2>قابل اندازه‌گیری، از روز اول</h2>
+      <div class="roi">
+        <ul class="points">
+          <li>کاهش Lead Time توسعه و زمان رفع Bug</li>
+          <li>افزایش تعداد فیچرهای تحویل‌شده در هر دوره</li>
+          <li>افزایش پوشش تست</li>
+          <li>کاهش زمان Onboarding نیروهای جدید</li>
+          <li>رضایت توسعه‌دهندگان (نظرسنجی دوره‌ای)</li>
+          <li>نرخ استفادهٔ واقعی از ابزارها</li>
+        </ul>
+        <div class="card">
+          <h3 class="gold">سازوکار سنجش</h3>
+          <p>پیش از شروع طرح، <strong style="color:var(--t-hi)">خط پایهٔ</strong> همهٔ شاخص‌ها ثبت می‌شود و هر فصل گزارش مقایسه‌ای به مدیریت ارائه می‌گردد. تمدید و اندازهٔ طرح در سال دوم بر اساس همین داده‌ها تصمیم‌گیری می‌شود — نه بر اساس حدس.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ۹ · نقشهٔ اجرا و درخواست -->
+  <section class="slide" aria-label="نقشهٔ اجرا و درخواست">
+    <div class="wrap">
+      <p class="eyebrow">۹ · نقشهٔ اجرا و درخواست</p>
+      <h2>سه گام تا اجرا</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="n">۱</div>
+          <p class="txt"><strong>ماه اول</strong> — ابلاغ دستورالعمل استفاده (داده‌های حساس)، تأمین لایسنس‌ها، ثبت خط پایهٔ شاخص‌ها و شروع با تیم‌های پیشرو.</p>
+        </div>
+        <div class="step">
+          <div class="n">۲</div>
+          <p class="txt"><strong>ماه دوم و سوم</strong> — رول‌اوت کامل برای همهٔ تیم‌ها همراه با آموزش الگوهای استفادهٔ صحیح.</p>
+        </div>
+        <div class="step">
+          <div class="n">۳</div>
+          <p class="txt"><strong>هر فصل</strong> — پایش نرخ استفاده و شاخص‌های موفقیت؛ تنظیم ترکیب و تعداد لایسنس‌ها بر اساس دادهٔ واقعی.</p>
+        </div>
+      </div>
+      <div class="ask">
+        <span class="tag">درخواست</span>
+        تصویب بودجهٔ <span class="ltr">$40,000</span> برای تأمین لایسنس‌های Cursor و Claude Code تیم فنی به مدت یک سال — با بازبینی فصلی و بدون تعهد بلندمدت.
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<nav class="controls" aria-label="ناوبری اسلایدها">
+  <button id="prev" aria-label="اسلاید قبلی">›</button>
+  <span class="counter" id="counter" aria-live="polite"></span>
+  <button id="next" aria-label="اسلاید بعدی">‹</button>
+</nav>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const bar = document.getElementById('bar');
+  const counter = document.getElementById('counter');
+  const fa = n => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+  let i = 0;
+
+  function go(n){
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    bar.style.width = ((i + 1) / slides.length * 100) + '%';
+    counter.textContent = fa(i + 1) + ' / ' + fa(slides.length);
+  }
+
+  document.getElementById('next').addEventListener('click', () => go(i + 1));
+  document.getElementById('prev').addEventListener('click', () => go(i - 1));
+
+  window.addEventListener('keydown', e => {
+    if (['ArrowLeft','ArrowDown','PageDown',' ','Enter'].includes(e.key)) { e.preventDefault(); go(i + 1); }
+    else if (['ArrowRight','ArrowUp','PageUp'].includes(e.key)) { e.preventDefault(); go(i - 1); }
+    else if (e.key === 'Home') go(0);
+    else if (e.key === 'End') go(slides.length - 1);
+  });
+
+  let x0 = null;
+  window.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, {passive:true});
+  window.addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 60) (dx < 0 ? go(i + 1) : go(i - 1));
+    x0 = null;
+  }, {passive:true});
+
+  go(0);
+</script>
+</body>
+</html>

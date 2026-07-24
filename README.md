@@ -8,6 +8,7 @@
 - پوشهٔ [`decks/`](./decks) — هر سند/اسلاید به‌صورت یک فایل HTML مستقل:
   - [`decks/milli-gold-claude.html`](./decks/milli-gold-claude.html) — «چرا Claude در کنار Cursor؟»
   - [`decks/head-of-product-engineering.html`](./decks/head-of-product-engineering.html) — «چرا میلی به Head of Product Engineering نیاز دارد»
+  - [`decks/ai-tools-proposal.html`](./decks/ai-tools-proposal.html) — «سرمایه‌گذاری در ابزارهای هوش مصنوعی توسعه»
 
 ## انتشار
 
