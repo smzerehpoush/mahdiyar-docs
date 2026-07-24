@@ -9,7 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#051061;
+    --bg:#020829;
+    --navy:#051061;
     --surface:rgba(253,185,19,.05);
     --line:rgba(253,185,19,.18);
     --line-strong:rgba(253,185,19,.45);
@@ -21,16 +22,18 @@
     --t-body:#D2D7EF;
     --t-mut:#8E96C4;
     --radius:16px;
+    --sf:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',system-ui,'Segoe UI',sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
   body{
     background:
-      radial-gradient(1100px 600px at 85% -10%, rgba(253,185,19,.10), transparent 60%),
-      radial-gradient(900px 500px at 0% 110%, rgba(1,109,242,.18), transparent 55%),
+      radial-gradient(1100px 600px at 85% -10%, rgba(253,185,19,.09), transparent 60%),
+      radial-gradient(1400px 800px at 50% 120%, rgba(5,16,97,.85), transparent 70%),
+      radial-gradient(900px 500px at 0% 110%, rgba(1,109,242,.14), transparent 55%),
       var(--bg);
     color:var(--t-body);
-    font-family:'Vazirmatn', Tahoma, 'Segoe UI', sans-serif;
+    font-family:'Vazirmatn','SF Arabic',Tahoma,'Segoe UI',sans-serif;
     overflow:hidden;
   }
 
@@ -79,6 +82,7 @@
   .badge{
     direction:ltr;unicode-bidi:isolate;display:inline-block;
     font-size:.7rem;font-weight:700;letter-spacing:.16em;
+    font-family:var(--sf);
     padding:.34em .95em;border-radius:999px;border:1px solid;
   }
   .badge.c{color:var(--silver);border-color:var(--silver-line)}
@@ -114,8 +118,9 @@
   .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:8px}
   .stat .label{font-size:.85rem;color:var(--t-mut);font-weight:600;margin-bottom:10px}
   .stat .num{
-    font-size:clamp(1.7rem,3.4vw,2.5rem);font-weight:800;color:var(--gold-hi);
-    direction:ltr;unicode-bidi:isolate;margin-bottom:12px;line-height:1.2;
+    font-size:clamp(2.1rem,4.6vw,3.4rem);font-weight:800;color:var(--gold-hi);
+    direction:ltr;unicode-bidi:isolate;margin-bottom:12px;line-height:1.15;
+    font-family:var(--sf);letter-spacing:-.03em;
   }
   .stat p{font-size:.95rem;line-height:1.9;color:var(--t-body)}
   .foot{margin-top:22px;font-size:.82rem;color:var(--t-mut)}
@@ -130,6 +135,59 @@
   .tbl tr:last-child td{border-bottom:none}
   .tbl td.total{color:var(--t-hi);font-weight:800;background:rgba(253,185,19,.07)}
 
+  /* ── staggered reveal ── */
+  .rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+  .slide.active .rv{opacity:1;transform:none}
+  .slide.active .rv.d1{transition-delay:.15s}
+  .slide.active .rv.d2{transition-delay:.3s}
+  .slide.active .rv.d3{transition-delay:.45s}
+  .slide.active .rv.d4{transition-delay:.6s}
+  .slide.active .rv.d5{transition-delay:.75s}
+
+  /* ── gold gradient text ── */
+  .gtx{background:linear-gradient(135deg,var(--gold) 20%,var(--gold-hi) 55%,#FFE9A8);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+
+  /* ── work week ── */
+  .week{display:flex;gap:12px;margin:26px 0 12px}
+  .day{
+    flex:1;height:clamp(88px,11vw,124px);border-radius:16px;position:relative;overflow:hidden;
+    border:1px solid var(--line);background:var(--surface);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .day b{position:relative;z-index:2;font-size:clamp(.75rem,1.4vw,.95rem);font-weight:700;color:var(--t-mut);transition:color .5s ease 1.4s}
+  .day .fill{
+    position:absolute;inset-inline:0;bottom:0;height:100%;
+    background:linear-gradient(180deg,var(--gold-hi),var(--gold));
+    transform:translateY(101%);transition:transform .9s cubic-bezier(.22,.7,.25,1) 1s;
+  }
+  .day.half .fill{height:52%;transition-delay:1.25s}
+  .slide.active .day .fill{transform:none}
+  .slide.active .day.freed b{color:#051061}
+
+  /* ── $1 → $4 coins ── */
+  .ratio{display:flex;align-items:center;justify-content:center;gap:clamp(20px,5vw,56px);margin:10px 0 14px}
+  .ratio-side{display:flex;flex-direction:column;align-items:center;gap:10px}
+  .coin-row{display:flex;gap:10px}
+  .coin{
+    width:clamp(50px,6.4vw,72px);aspect-ratio:1;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:clamp(.95rem,1.8vw,1.25rem);direction:ltr;unicode-bidi:isolate;
+    font-family:var(--sf);letter-spacing:-.02em;
+    transform:scale(0);transition:transform .5s cubic-bezier(.34,1.56,.64,1);
+  }
+  .coin.s{background:rgba(174,184,216,.15);border:1px solid var(--silver-line);color:var(--silver)}
+  .coin.g{background:radial-gradient(circle at 32% 30%,#FFE9A8,var(--gold-hi) 38%,var(--gold));
+    color:#051061;box-shadow:0 8px 28px rgba(253,185,19,.35)}
+  .slide.active .coin{transform:scale(1)}
+  .slide.active .coin.s{transition-delay:.2s}
+  .slide.active .coin.g:nth-child(1){transition-delay:.5s}
+  .slide.active .coin.g:nth-child(2){transition-delay:.65s}
+  .slide.active .coin.g:nth-child(3){transition-delay:.8s}
+  .slide.active .coin.g:nth-child(4){transition-delay:.95s}
+  .ratio-lab{font-size:.95rem;color:var(--t-mut);font-weight:700}
+  .ratio-arrow{color:var(--gold);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:900}
+
   /* ── duel bars (apple-style comparison) ── */
   .duel{display:flex;flex-direction:column;gap:20px;margin:34px 0 30px}
   .duel-row{display:grid;grid-template-columns:minmax(120px,170px) 1fr;align-items:center;gap:18px}
@@ -143,8 +201,9 @@
   .duel-bar.cost{background:rgba(174,184,216,.14);border:1px solid var(--silver-line)}
   .duel-bar.save{background:linear-gradient(90deg,var(--gold),var(--gold-hi));box-shadow:0 10px 40px rgba(253,185,19,.25)}
   .duel-num{
-    direction:ltr;unicode-bidi:isolate;font-weight:900;line-height:1;
+    direction:ltr;unicode-bidi:isolate;font-weight:800;line-height:1;
     font-size:clamp(1.5rem,3.6vw,2.4rem);
+    font-family:var(--sf);letter-spacing:-.03em;
   }
   .duel-bar.cost .duel-num{color:var(--silver)}
   .duel-bar.save .duel-num{color:#051061}
@@ -196,6 +255,11 @@
   /* ── title slide ── */
   .meta{margin-top:36px;display:flex;gap:26px;flex-wrap:wrap;font-size:.92rem;color:var(--t-mut)}
   .hint{margin-top:14px;font-size:.8rem;color:var(--t-mut);opacity:.75}
+  .slide.center .wrap{display:flex;flex-direction:column;align-items:center;text-align:center}
+  .slide.center .eyebrow{justify-content:center}
+  .slide.center .eyebrow::before{display:none}
+  .slide.center .lede{max-width:60ch}
+  .slide.center .meta{justify-content:center}
 
   /* ── controls ── */
   .controls{
@@ -218,9 +282,13 @@
   }
 
   @media (prefers-reduced-motion:reduce){
-    .slide,.progress b,.duel-bar,.months i.hit{transition:none}
+    .slide,.progress b,.duel-bar,.months i.hit,.rv,.coin,.day .fill,.day b{transition:none}
     .duel-bar{width:var(--w)}
     .months i.hit{opacity:1}
+    .rv{opacity:1;transform:none}
+    .coin{transform:scale(1)}
+    .day .fill{transform:none}
+    .day.freed b{color:#051061}
   }
 
   /* ── print ── */
@@ -231,6 +299,10 @@
       break-after:page;min-height:100vh;padding:40px 0}
     .duel-bar{width:var(--w);transition:none}
     .months i.hit{opacity:1;transition:none}
+    .rv{opacity:1;transform:none}
+    .coin{transform:scale(1)}
+    .day .fill{transform:none}
+    .day.freed b{color:#051061}
     .controls,.progress,.hint{display:none}
   }
 </style>
@@ -242,11 +314,11 @@
 <main class="deck" id="deck">
 
   <!-- جلد -->
-  <section class="slide active" aria-label="جلد">
+  <section class="slide center active" aria-label="جلد">
     <div class="wrap">
       <p class="eyebrow">میلی · واحد فناوری · تیر ۱۴۰۵</p>
-      <h1>سرمایه‌گذاری در ابزارهای <span class="gold">هوش مصنوعی</span> توسعهٔ نرم‌افزار</h1>
-      <p class="lede">پیشنهاد تأمین رسمی <span class="ltr">Cursor</span> و <span class="ltr">Claude Code</span> برای کل تیم فنی — با توجیه اقتصادی روشن، مدیریت ریسک و برنامهٔ اجرای مرحله‌ای.</p>
+      <h1>سرمایه‌گذاری در ابزارهای <span class="gtx">هوش مصنوعی</span> توسعهٔ نرم‌افزار</h1>
+      <p class="lede rv d1">پیشنهاد تأمین رسمی <span class="ltr">Cursor</span> و <span class="ltr">Claude Code</span> برای کل تیم فنی — با توجیه اقتصادی روشن، مدیریت ریسک و برنامهٔ اجرای مرحله‌ای.</p>
       <div class="meta">
         <span>تهیه‌کننده: واحد فناوری (CTO)</span>
         <span>مخاطب: مدیریت ارشد سازمان</span>
@@ -262,19 +334,19 @@
       <h2>یک تصمیم، سه عدد</h2>
       <p class="lede" style="margin-bottom:26px">پیشنهاد می‌شود شرکت استفاده از ابزارهای هوش مصنوعی توسعهٔ نرم‌افزار را به‌صورت رسمی برای کلیهٔ اعضای تیم فنی فراهم کند.</p>
       <div class="stats">
-        <div class="card stat">
+        <div class="card stat rv d1">
           <p class="label">اندازهٔ تیم فنی</p>
-          <p class="num" data-count="70">70</p>
+          <p class="num gtx" data-count="70">70</p>
           <p>نفر در تیم‌های توسعه، امنیت، دیتا و IT — دامنهٔ پوشش این طرح.</p>
         </div>
-        <div class="card stat">
+        <div class="card stat rv d2">
           <p class="label">بودجهٔ سالانهٔ درخواستی</p>
-          <p class="num" data-count="40" data-prefix="$" data-suffix="K">$40K</p>
+          <p class="num gtx" data-count="40" data-prefix="$" data-suffix="K">$40K</p>
           <p>به ازای هر نفر، ماهانه حدود حقوقِ یک روز کاری — و نه بیشتر.</p>
         </div>
-        <div class="card stat">
+        <div class="card stat rv d3">
           <p class="label">بازگشت سرمایهٔ سال اول</p>
-          <p class="num" data-count="4" data-prefix="≈" data-suffix="×">≈4×</p>
+          <p class="num gtx" data-count="4" data-prefix="≈" data-suffix="×">≈4×</p>
           <p>با فرض محافظه‌کارانهٔ ۲۰٪ بهبود بهره‌وری؛ جزئیات محاسبه در بخش ROI.</p>
         </div>
       </div>
@@ -350,25 +422,26 @@
   <section class="slide" aria-label="مزایای کسب‌وکاری">
     <div class="wrap">
       <p class="eyebrow">۴ · مزایای کسب‌وکاری</p>
-      <h2>اثر مستقیم بر سه شاخص کلیدی</h2>
-      <div class="stats">
-        <div class="card stat">
-          <p class="label">بهره‌وری توسعه‌دهندگان</p>
-          <p class="num">20–50%</p>
-          <p>یعنی از هر هفتهٔ کاری هر مهندس، <strong style="color:var(--t-hi)">۱ تا ۲.۵ روز</strong> آزاد می‌شود — بیشترین صرفه‌جویی در کدهای تکراری، تست، مستندسازی، دیباگ و رفکتور (مطالعات شرکت‌های بزرگ فناوری).</p>
+      <h2>از هر هفتهٔ کاری، <span class="gtx">یک روز کامل</span> برمی‌گردد</h2>
+      <p class="lede rv" style="margin-bottom:6px">بهبود ۲۰ تا ۵۰ درصدی بهره‌وری (مطالعات شرکت‌های بزرگ فناوری) برای هر مهندس یعنی:</p>
+      <div class="week" aria-label="هفتهٔ کاری — روزهای آزادشده">
+        <div class="day"><b>شنبه</b></div>
+        <div class="day"><b>یکشنبه</b></div>
+        <div class="day"><b>دوشنبه</b></div>
+        <div class="day half"><div class="fill"></div><b>سه‌شنبه</b></div>
+        <div class="day freed"><div class="fill"></div><b>چهارشنبه</b></div>
+      </div>
+      <p class="foot" style="margin-top:0">روز طلایی = صرفه‌جویی قطعی با کف ۲۰٪ · نیمهٔ طلایی = سناریوی ۵۰٪ — بیشترین صرفه‌جویی در کدهای تکراری، تست، مستندسازی، دیباگ و رفکتور.</p>
+      <div class="cols" style="margin:22px 0 0">
+        <div class="card rv d3">
+          <h3 class="gold">عرضهٔ سریع‌تر (Time to Market)</h3>
+          <p>هر هفته کاهش در زمان توسعه یعنی ارائهٔ سریع‌تر قابلیت‌های جدید به مشتریان — مزیتی تعیین‌کننده در بازار رقابتی.</p>
         </div>
-        <div class="card stat">
-          <p class="label">زمان عرضهٔ محصول</p>
-          <p class="num" style="font-size:clamp(1.3rem,2.4vw,1.8rem)">Time to Market</p>
-          <p>هر هفته کاهش در زمان توسعه، یعنی ارائهٔ سریع‌تر قابلیت‌های جدید به مشتریان — مزیتی تعیین‌کننده در بازار رقابتی.</p>
-        </div>
-        <div class="card stat">
-          <p class="label">کیفیت نرم‌افزار</p>
-          <p class="num" style="font-size:clamp(1.3rem,2.4vw,1.8rem)">خطای کمتر</p>
-          <p>تشخیص خطاهای رایج، رعایت استانداردهای کدنویسی و کمک در تولید تست، احتمال خطای انسانی را کاهش می‌دهد.</p>
+        <div class="card rv d4">
+          <h3 class="gold">خطای کمتر، جذبِ بهتر</h3>
+          <p>تشخیص خطاهای رایج و کمک در تولید تست، خطای انسانی را کم می‌کند؛ و داشتن این ابزارها امروز بخشی از <strong style="color:var(--t-hi)">برند کارفرمایی</strong> برای جذب و حفظ متخصصان است.</p>
         </div>
       </div>
-      <p class="takeaway" style="margin-top:22px">و یک اثر جانبی راهبردی: <strong class="gold">برند کارفرمایی</strong>. توسعه‌دهندگان حرفه‌ای امروز انتظار دارند این ابزارها در اختیارشان باشد؛ نبودشان مستقیماً بر جذب و حفظ نیرو اثر منفی می‌گذارد.</p>
     </div>
   </section>
 
@@ -399,7 +472,17 @@
           </tr>
         </tbody>
       </table>
-      <p class="takeaway">به زبان ملموس: کل طرح برای هر عضو تیم حدود <strong class="gold">۴۸ دلار در ماه</strong> هزینه دارد — تقریباً حقوق یک روز کاری یک مهندس. مدل ترکیبی نسبت به تخصیص Claude Code به همه، هزینه را به‌شکل قابل توجهی کاهش می‌دهد و ترکیب لایسنس‌ها فصلی بازنگری می‌شود.</p>
+      <div class="duel" style="margin:24px 0 10px">
+        <div class="duel-row">
+          <p class="duel-label">Claude Code برای همهٔ ۷۰ نفر</p>
+          <div class="duel-bar cost" style="--w:100%"><span class="duel-num" data-count="84" data-prefix="$" data-suffix="K+">$84K+</span></div>
+        </div>
+        <div class="duel-row">
+          <p class="duel-label">مدل ترکیبی — پیشنهاد ما</p>
+          <div class="duel-bar save" style="--w:48%"><span class="duel-num" data-count="40" data-prefix="$" data-suffix="K">$40K</span></div>
+        </div>
+      </div>
+      <p class="takeaway rv d3">به زبان ملموس: کل طرح برای هر عضو تیم حدود <strong class="gold">۴۸ دلار در ماه</strong> هزینه دارد — تقریباً حقوق یک روز کاری یک مهندس — و کمتر از نصفِ تخصیص همگانی Claude Code. ترکیب لایسنس‌ها فصلی بازنگری می‌شود.</p>
     </div>
   </section>
 
@@ -407,9 +490,21 @@
   <section class="slide" aria-label="بازگشت سرمایه">
     <div class="wrap">
       <p class="eyebrow">۶ · بازگشت سرمایه (ROI)</p>
-      <h2>یک روز می‌دهیم، <span class="gold">چهار روز</span> پس می‌گیریم</h2>
-      <p class="lede">به ازای هر مهندس، هزینهٔ ماهانهٔ طرح حدود حقوقِ <strong style="color:var(--t-hi)">یک روز کاری</strong> است — و بهبود ۲۰٪ بهره‌وری، ماهانه <strong style="color:var(--t-hi)">چهار روز کاری</strong> آزاد می‌کند.</p>
-      <div class="duel">
+      <h2>یک روز می‌دهیم، <span class="gtx">چهار روز</span> پس می‌گیریم</h2>
+      <div class="ratio" aria-label="نسبت هزینه به بازده">
+        <div class="ratio-side">
+          <div class="coin-row"><div class="coin s">$1</div></div>
+          <p class="ratio-lab">می‌دهیم</p>
+        </div>
+        <span class="ratio-arrow" aria-hidden="true">◀</span>
+        <div class="ratio-side">
+          <div class="coin-row">
+            <div class="coin g">$1</div><div class="coin g">$1</div><div class="coin g">$1</div><div class="coin g">$1</div>
+          </div>
+          <p class="ratio-lab">پس می‌گیریم</p>
+        </div>
+      </div>
+      <div class="duel" style="margin:18px 0 22px">
         <div class="duel-row">
           <p class="duel-label">هزینهٔ سالانهٔ طرح</p>
           <div class="duel-bar cost" style="--w:25%"><span class="duel-num" data-count="40" data-prefix="$" data-suffix="K">$40K</span></div>
