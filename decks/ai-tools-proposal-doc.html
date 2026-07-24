@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>پیشنهاد سرمایه‌گذاری در ابزارهای هوش مصنوعی توسعهٔ نرم‌افزار — میلی</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#051061;
+    --gold:#FDB913;
+    --gold-soft:rgba(253,185,19,.10);
+    --line:#E3E6F2;
+    --t-body:#2A2F45;
+    --t-mut:#6A7190;
+    --sf:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',system-ui,'Segoe UI',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  @page{size:A4;margin:22mm 18mm}
+  html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{
+    font-family:'Vazirmatn','SF Arabic',Tahoma,'Segoe UI',sans-serif;
+    color:var(--t-body);font-size:10.5pt;line-height:2;background:#fff;
+  }
+
+  /* ── header ── */
+  .doc-head{border-bottom:3px solid var(--navy);padding-bottom:18px;margin-bottom:8px}
+  .brand{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:20px}
+  .brand .co{color:var(--navy);font-weight:900;font-size:12pt}
+  .brand .co i{font-style:normal;color:var(--gold)}
+  .brand .date{color:var(--t-mut);font-size:9pt}
+  h1{color:var(--navy);font-weight:900;font-size:19pt;line-height:1.6;margin-bottom:8px}
+  .subject{color:var(--t-mut);font-size:10pt}
+  .subject b{color:var(--t-body)}
+
+  /* ── key figures band ── */
+  .figs{display:flex;gap:12px;margin:18px 0 6px}
+  .fig{
+    flex:1;border:1px solid var(--line);border-top:3px solid var(--gold);
+    border-radius:8px;padding:12px 14px;background:#FBFBFE;
+  }
+  .fig .n{font-family:var(--sf);direction:ltr;unicode-bidi:isolate;display:block;
+    color:var(--navy);font-weight:800;font-size:17pt;letter-spacing:-.02em;line-height:1.3}
+  .fig .l{font-size:8.5pt;color:var(--t-mut);line-height:1.8}
+
+  /* ── sections ── */
+  h2{
+    color:var(--navy);font-weight:800;font-size:13pt;margin:26px 0 10px;
+    display:flex;align-items:center;gap:10px;break-after:avoid;
+  }
+  h2::before{content:"";width:18px;height:3px;border-radius:2px;background:var(--gold);flex:0 0 auto}
+  h3{color:var(--navy);font-weight:700;font-size:11pt;margin:14px 0 6px;break-after:avoid}
+  p{margin-bottom:8px;text-align:justify}
+  ul{margin:2px 18px 10px 0}
+  li{margin-bottom:4px}
+  li::marker{color:var(--gold)}
+  .ltr{direction:ltr;unicode-bidi:isolate}
+  strong{color:var(--navy)}
+
+  /* ── tables ── */
+  table{width:100%;border-collapse:collapse;margin:10px 0 14px;break-inside:avoid}
+  th,td{border:1px solid var(--line);padding:8px 12px;text-align:right;vertical-align:top;line-height:1.9}
+  th{background:var(--navy);color:#fff;font-weight:700;font-size:9.5pt}
+  td.num{font-family:var(--sf);direction:ltr;text-align:left;white-space:nowrap}
+  tr.total td{background:var(--gold-soft);font-weight:800;color:var(--navy)}
+
+  /* ── callouts ── */
+  .callout{
+    background:var(--gold-soft);border-right:3px solid var(--gold);
+    border-radius:0 6px 6px 0;padding:10px 14px;margin:10px 0 14px;break-inside:avoid;
+  }
+  .ask{
+    border:1.5px solid var(--navy);border-radius:8px;background:#FBFBFE;
+    padding:14px 18px;margin:14px 0;break-inside:avoid;
+  }
+  .ask .tag{display:block;color:var(--gold);font-weight:800;font-size:9pt;letter-spacing:.05em;margin-bottom:4px}
+  .ask p{color:var(--navy);font-weight:700;font-size:11pt;margin:0;text-align:right}
+
+  .note{font-size:8.5pt;color:var(--t-mut);line-height:1.9}
+
+  footer{margin-top:28px;padding-top:10px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;color:var(--t-mut);font-size:8.5pt}
+</style>
+</head>
+<body>
+
+<header class="doc-head">
+  <div class="brand">
+    <span class="co">میلی<i>‌</i>گلد · واحد فناوری</span>
+    <span class="date">تیر ۱۴۰۵</span>
+  </div>
+  <h1>پیشنهاد سرمایه‌گذاری در ابزارهای هوش مصنوعی توسعهٔ نرم‌افزار</h1>
+  <p class="subject"><b>موضوع:</b> تأمین رسمی ابزارهای Cursor و Claude Code برای کلیهٔ اعضای تیم فنی · <b>تهیه‌کننده:</b> واحد فناوری (CTO) · <b>مخاطب:</b> مدیریت ارشد سازمان</p>
+</header>
+
+<div class="figs">
+  <div class="fig"><span class="n">70</span><span class="l">نفر — دامنهٔ پوشش طرح: تیم‌های توسعه، امنیت، دیتا و IT</span></div>
+  <div class="fig"><span class="n">$40,000</span><span class="l">بودجهٔ سالانهٔ درخواستی — برای هر نفر ماهانه حدود حقوق یک روز کاری</span></div>
+  <div class="fig"><span class="n">≈4×</span><span class="l">بازگشت سرمایهٔ سال اول با فرض محافظه‌کارانهٔ ۲۰٪ بهبود بهره‌وری</span></div>
+</div>
+
+<h2>۱. خلاصهٔ مدیریتی</h2>
+<p>با توجه به سرعت تحول فناوری هوش مصنوعی و تأثیر مستقیم آن بر صنعت توسعهٔ نرم‌افزار، پیشنهاد می‌شود شرکت استفاده از ابزارهای هوش مصنوعی توسعه — <span class="ltr">Cursor</span> و <span class="ltr">Claude Code</span> — را به‌صورت رسمی برای کلیهٔ اعضای تیم فنی فراهم کند.</p>
+<p>هدف این سرمایه‌گذاری صرفاً خرید ابزار نیست؛ افزایش بهره‌وری سازمان، کاهش زمان توسعه، ارتقای کیفیت نرم‌افزار، افزایش رضایت متخصصان و حفظ مزیت رقابتی شرکت موضوع آن است. هزینهٔ سالانهٔ طرح در برابر هزینهٔ نیروی انسانی ناچیز است و بازگشت کامل سرمایه در حدود <strong>سه ماه</strong> برآورد می‌شود.</p>
+
+<h2>۲. وضعیت فعلی</h2>
+<p>ابزارهای مبتنی بر مدل‌های زبانی بزرگ (LLM) در شرکت‌های فناوری دنیا به بخشی جدایی‌ناپذیر از فرآیند توسعه تبدیل شده‌اند و در فعالیت‌هایی نظیر تولید و تکمیل خودکار کد، Refactoring، تولید Unit Test، بررسی Pull Request، تحلیل لاگ و خطا، مستندسازی، یادگیری تکنولوژی‌های جدید و طراحی معماری به توسعه‌دهندگان کمک می‌کنند.</p>
+<p class="callout">عدم استفاده از این ابزارها به معنای کاهش تدریجی رقابت‌پذیری تیم فنی در برابر شرکت‌هایی است که هم‌اکنون از آن‌ها استفاده می‌کنند.</p>
+
+<h2>۳. اهداف طرح</h2>
+<ul>
+  <li><strong>سرعت و کیفیت:</strong> افزایش سرعت تولید نرم‌افزار، ارتقای کیفیت کد، کاهش زمان رفع خطا.</li>
+  <li><strong>افراد:</strong> تمرکز توسعه‌دهندگان بر مسائل پیچیده، افزایش رضایت شغلی، جذب و حفظ نیروهای متخصص.</li>
+  <li><strong>سازمان:</strong> هم‌راستایی با روندهای جهانی صنعت، مزیت رقابتی در محصولات جدید، کاهش وابستگی به افراد کلیدی.</li>
+</ul>
+
+<h2>۴. مزایای کسب‌وکاری</h2>
+<h3>۴-۱. بهره‌وری: از هر هفتهٔ کاری، یک روز کامل برمی‌گردد</h3>
+<p>مطالعات منتشرشدهٔ شرکت‌های بزرگ فناوری نشان می‌دهد استفادهٔ صحیح از ابزارهای AI بسته به نوع پروژه بین <strong>۲۰ تا ۵۰ درصد</strong> بهره‌وری توسعه‌دهندگان را افزایش می‌دهد؛ به زبان ملموس، برای هر مهندس <strong>۱ تا ۲.۵ روز کاری در هفته</strong> آزاد می‌شود. بیشترین صرفه‌جویی در نوشتن کدهای تکراری، تولید تست، مستندسازی، دیباگ و رفکتور مشاهده شده است.</p>
+<h3>۴-۲. کاهش زمان عرضهٔ محصول (Time to Market)</h3>
+<p>هر هفته کاهش در زمان توسعه، امکان ارائهٔ سریع‌تر قابلیت‌های جدید به مشتریان را فراهم می‌کند — مزیتی تعیین‌کننده در بازار رقابتی.</p>
+<h3>۴-۳. افزایش کیفیت نرم‌افزار</h3>
+<p>تشخیص خطاهای رایج، رعایت استانداردهای کدنویسی و کمک در تولید تست، احتمال خطای انسانی را کاهش می‌دهد.</p>
+<h3>۴-۴. افراد و برند کارفرمایی</h3>
+<p>توسعه‌دهندگان حرفه‌ای امروز انتظار دارند این ابزارها در اختیارشان باشد؛ فراهم‌نبودن آن‌ها بر رضایت شغلی، انگیزه، جذب و حفظ نیروهای متخصص اثر منفی می‌گذارد. این ابزارها همچنین با تسهیل درک کدهای قدیمی و انتقال دانش، وابستگی به افراد کلیدی را کاهش می‌دهند و سرعت یادگیری فناوری‌های جدید را بالا می‌برند.</p>
+
+<h2>۵. برآورد هزینه</h2>
+<table>
+  <thead><tr><th>ابزار</th><th>تعداد کاربر</th><th>هزینهٔ سالانه</th></tr></thead>
+  <tbody>
+    <tr><td>Cursor Pro — برای همهٔ توسعه‌دهندگان</td><td class="num">60</td><td class="num">$14,400</td></tr>
+    <tr><td>Claude Code — برای کاربران کلیدی (کارهای سنگین و چندفایلی)</td><td class="num">20</td><td class="num">$24,000 – $48,000</td></tr>
+    <tr class="total"><td>سقف بودجهٔ پیشنهادی</td><td></td><td class="num">$40,000</td></tr>
+  </tbody>
+</table>
+<p>مدل ترکیبی همهٔ توسعه‌دهندگان را پوشش می‌دهد و هزینه را نسبت به تخصیص Claude Code به همهٔ ۷۰ نفر (حداقل حدود <span class="ltr">$84,000</span> در سال) به <strong>کمتر از نصف</strong> کاهش می‌دهد. به زبان ملموس، کل طرح برای هر عضو تیم حدود <strong>۴۸ دلار در ماه</strong> — تقریباً حقوق یک روز کاری یک مهندس — هزینه دارد. ترکیب و تعداد لایسنس‌ها بر اساس دادهٔ مصرف واقعی، فصلی بازنگری می‌شود.</p>
+
+<h2>۶. بازگشت سرمایه (ROI)</h2>
+<p class="callout"><strong>یک روز می‌دهیم، چهار روز پس می‌گیریم:</strong> به ازای هر مهندس، هزینهٔ ماهانهٔ طرح حدود حقوق یک روز کاری است و بهبود ۲۰٪ بهره‌وری، ماهانه حدود چهار روز کاری آزاد می‌کند.</p>
+<ul>
+  <li>هزینهٔ حقوق سالانهٔ تیم فنی (≈۷۰ نفر × میانگین ۱۸۰ میلیون تومان در ماه) حدود <strong>۱۵۰ میلیارد تومان</strong> است.</li>
+  <li>بهبود ۲۰٪ بهره‌وری — کفِ بازهٔ مطالعات — یعنی حدود ۳۰ میلیارد تومان، معادل <strong>≈۱۶۰ هزار دلار</strong> در سال.</li>
+  <li>در برابر بودجهٔ ۴۰ هزار دلاری: بازگشت کامل سرمایه تا <strong>پایان ماه سوم</strong>؛ حتی با یک‌چهارم این بهبود، در کمتر از یک سال.</li>
+</ul>
+<p class="note">مزایای غیرمستقیم — کاهش خطا، حفظ نیرو، عرضهٔ سریع‌تر محصول — در این محاسبه لحاظ نشده‌اند و روی آن افزوده می‌شوند.</p>
+
+<h2>۷. ریسک‌ها و راهکارهای کنترل</h2>
+<table>
+  <thead><tr><th style="width:32%">ریسک</th><th>راهکار</th></tr></thead>
+  <tbody>
+    <tr><td>ارسال اطلاعات محرمانه به مدل‌ها</td><td>تدوین دستورالعمل استفاده و ممنوعیت ارسال داده‌های حساس؛ استفاده از تنظیمات Enterprise یا محدودسازی داده‌ها در صورت نیاز.</td></tr>
+    <tr><td>تولید کد نادرست</td><td>الزام به Code Review و تست‌های خودکار برای همهٔ کدها — همانند کد انسانی.</td></tr>
+    <tr><td>وابستگی بیش از حد به AI</td><td>مسئولیت نهایی هر تغییر با توسعه‌دهنده باقی می‌ماند؛ آموزش الگوهای استفادهٔ صحیح بخشی از رول‌اوت است.</td></tr>
+    <tr><td>هزینهٔ اشتراک</td><td>پایش دوره‌ای میزان استفاده و بازنگری فصلی تعداد لایسنس‌ها؛ اشتراک‌ها ماهانه‌اند و تعهد بلندمدت ندارند.</td></tr>
+  </tbody>
+</table>
+
+<h2>۸. شاخص‌های موفقیت</h2>
+<ul>
+  <li>کاهش Lead Time توسعه و زمان رفع Bug</li>
+  <li>افزایش تعداد فیچرهای تحویل‌شده در هر دوره و افزایش پوشش تست</li>
+  <li>کاهش زمان Onboarding نیروهای جدید</li>
+  <li>رضایت توسعه‌دهندگان (نظرسنجی دوره‌ای) و نرخ استفادهٔ واقعی از ابزارها</li>
+</ul>
+<p>پیش از شروع طرح، <strong>خط پایهٔ</strong> همهٔ شاخص‌ها ثبت می‌شود و هر فصل گزارش مقایسه‌ای به مدیریت ارائه می‌گردد. تمدید و اندازهٔ طرح در سال دوم بر اساس همین داده‌ها تصمیم‌گیری می‌شود.</p>
+
+<h2>۹. نقشهٔ اجرا و درخواست</h2>
+<ul>
+  <li><strong>ماه اول:</strong> ابلاغ دستورالعمل استفاده (داده‌های حساس)، تأمین لایسنس‌ها، ثبت خط پایهٔ شاخص‌ها و شروع با تیم‌های پیشرو.</li>
+  <li><strong>ماه دوم و سوم:</strong> رول‌اوت کامل برای همهٔ تیم‌ها همراه با آموزش الگوهای استفادهٔ صحیح.</li>
+  <li><strong>هر فصل:</strong> پایش نرخ استفاده و شاخص‌های موفقیت؛ تنظیم ترکیب و تعداد لایسنس‌ها بر اساس دادهٔ واقعی.</li>
+</ul>
+<div class="ask">
+  <span class="tag">درخواست</span>
+  <p>تصویب بودجهٔ <span class="ltr" style="font-family:var(--sf)">$40,000</span> برای تأمین لایسنس‌های Cursor و Claude Code تیم فنی به مدت یک سال — با بازبینی فصلی و بدون تعهد بلندمدت.</p>
+</div>
+
+<footer>
+  <span>میلی‌گلد · واحد فناوری · پیشنهاد سرمایه‌گذاری در ابزارهای هوش مصنوعی توسعه</span>
+  <span>تیر ۱۴۰۵</span>
+</footer>
+
+</body>
+</html>
