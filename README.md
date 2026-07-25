@@ -9,6 +9,7 @@
   - [`decks/milli-gold-claude.html`](./decks/milli-gold-claude.html) — «چرا Claude در کنار Cursor؟»
   - [`decks/head-of-product-engineering.html`](./decks/head-of-product-engineering.html) — «چرا میلی به Head of Product Engineering نیاز دارد»
   - [`decks/ai-tools-proposal.html`](./decks/ai-tools-proposal.html) — «سرمایه‌گذاری در ابزارهای هوش مصنوعی توسعه»
+  - [`decks/proposal-v2.html`](./decks/proposal-v2.html) — «سرمایه‌گذاری در ابزارهای هوش مصنوعی — نسخهٔ هیئت‌مدیره» (+ [PDF](./decks/proposal-v2.pdf))
 
 ## انتشار
 
